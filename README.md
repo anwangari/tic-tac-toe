@@ -1,0 +1,1 @@
+Tic Tac Toe is a classic paper-and-pencil game for two players who take turns marking the spaces in a three-by-three grid, one with Xs and the other with Os. A player wins when they mark all three spaces of a row, column, or diagonal of the grid.
