@@ -6,4 +6,4 @@ Tic Tac Toe is a classic two-player game where players take turns marking spaces
 👉 [Play Now](https://anwangari.github.io/tic-tac-toe/)
 
 ## 🎥 Video Demo
-[Watch Demo](/videos/Screencast%20from%2019-07-2025%2011:50:32%20ASUBUHI.webm)
+![Watch Demo](/videos/Screencast%20from%2019-07-2025%2011:50:32%20ASUBUHI.webm)
