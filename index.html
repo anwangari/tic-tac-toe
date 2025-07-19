@@ -3,12 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic Tac Toe Game</title>
+    <title>Tic-Tac-Toe</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="game-container">
         <h1>🎯 Tic-Tac-Toe</h1>
+        
+        <!-- Player Setup Modal -->
+        <div class="modal" id="playerModal">
+            <div class="modal-content">
+                <h2>👥 Player Setup</h2>
+                <div class="player-inputs">
+                    <div class="input-group">
+                        <label for="player1Name">Player X Name:</label>
+                        <input type="text" id="player1Name" placeholder="Enter Player 1 name" maxlength="15">
+                    </div>
+                    <div class="input-group">
+                        <label for="player2Name">Player O Name:</label>
+                        <input type="text" id="player2Name" placeholder="Enter Player 2 name" maxlength="15">
+                    </div>
+                </div>
+                <div class="modal-controls">
+                    <button class="btn" id="startGameBtn">🚀 Start Game</button>
+                    <button class="btn secondary" id="useDefaultBtn">Use X & O</button>
+                </div>
+            </div>
+        </div>
+
         <div class="game-info" id="gameInfo">
             <span class="status-icon">▶️</span>
             <span id="statusText">Player X's turn</span>
@@ -16,6 +38,7 @@
         <div class="game-board" id="gameBoard"></div>
         <div class="controls">
             <button class="btn" id="resetBtn">🔄 New Game</button>
+            <button class="btn" id="changeNamesBtn">👥 Change Names</button>
             <button class="btn" id="instructionsBtn">❓ Instructions</button>
         </div>
     </div>

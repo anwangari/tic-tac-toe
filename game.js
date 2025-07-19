@@ -1,10 +1,16 @@
 // Player object - handles player-specific functionality
 const Player = {
-    create(symbol) {
+    create(symbol, name = null) {
         return {
             symbol,
+            name: name || `Player ${symbol}`,
+            
             getName() {
-                return `Player ${this.symbol}`;
+                return this.name;
+            },
+            
+            setName(newName) {
+                this.name = newName.trim() || `Player ${this.symbol}`;
             }
         };
     }
@@ -114,11 +120,17 @@ const UIController = {
             statusElement: document.getElementById('statusText'),
             resetBtn: document.getElementById('resetBtn'),
             instructionsBtn: document.getElementById('instructionsBtn'),
+            changeNamesBtn: document.getElementById('changeNamesBtn'),
+            playerModal: document.getElementById('playerModal'),
+            startGameBtn: document.getElementById('startGameBtn'),
+            useDefaultBtn: document.getElementById('useDefaultBtn'),
+            player1Input: document.getElementById('player1Name'),
+            player2Input: document.getElementById('player2Name'),
             
             init() {
                 this.createBoard();
                 this.bindEvents();
-                this.updateStatus();
+                this.showPlayerModal();
             },
             
             createBoard() {
@@ -135,6 +147,59 @@ const UIController = {
             bindEvents() {
                 this.resetBtn.addEventListener('click', () => this.handleReset());
                 this.instructionsBtn.addEventListener('click', () => this.showInstructions());
+                this.changeNamesBtn.addEventListener('click', () => this.showPlayerModal());
+                this.startGameBtn.addEventListener('click', () => this.handleStartGame());
+                this.useDefaultBtn.addEventListener('click', () => this.useDefaultNames());
+                
+                // Enter key support for inputs
+                this.player1Input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') this.handleStartGame();
+                });
+                this.player2Input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') this.handleStartGame();
+                });
+            },
+            
+            showPlayerModal() {
+                this.playerModal.classList.remove('hidden');
+                this.player1Input.focus();
+            },
+            
+            hidePlayerModal() {
+                this.playerModal.classList.add('hidden');
+            },
+            
+            handleStartGame() {
+                const player1Name = this.player1Input.value.trim();
+                const player2Name = this.player2Input.value.trim();
+                
+                if (!player1Name || !player2Name) {
+                    alert('Please enter names for both players!');
+                    return;
+                }
+                
+                if (player1Name.toLowerCase() === player2Name.toLowerCase()) {
+                    alert('Players must have different names!');
+                    return;
+                }
+                
+                this.game.players[0].setName(player1Name);
+                this.game.players[1].setName(player2Name);
+                
+                this.hidePlayerModal();
+                this.game.reset();
+                this.updateBoard();
+                this.updateStatus();
+            },
+            
+            useDefaultNames() {
+                this.game.players[0].setName('Player X');
+                this.game.players[1].setName('Player O');
+                
+                this.hidePlayerModal();
+                this.game.reset();
+                this.updateBoard();
+                this.updateStatus();
             },
             
             handleCellClick(event) {
@@ -196,6 +261,7 @@ const UIController = {
 • Click any empty cell to place your mark
 • Player X always goes first
 • Get 3 in a row (horizontal, vertical, or diagonal) to win!
+• Use "Change Names" to set custom player names
 • Click "New Game" to start over
 • Have fun! 🎯`);
             }
@@ -206,4 +272,8 @@ const UIController = {
 // Initialize the game
 const game = Game.create();
 const ui = UIController.create(game);
-ui.init();
+
+// Start when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    ui.init();
+});
